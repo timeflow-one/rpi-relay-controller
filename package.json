@@ -3,14 +3,15 @@
   "version": "0.1.0",
   "main": "dist/App.js",
   "scripts": {
-    "start": "node -r dotenv/config -r ts-node/register -r tsconfig-paths/register src/App.ts",
-    "serve": "nodemon -e src/**/*.ts --exec \"npm start\"",
+    "start": "node -r dotenv/config -r ts-node/register -r tsconfig-paths/register src/App.js",
+    "serve": "nodemon -e src/**/*.js --exec \"npm start\"",
     "build": "tsc -p tsconfig.json",
     "runtime": "pm2-runtime dist/App.js --name rpi-relay-controller -i 1 --max-memory-restart 500M --time"
   },
   "dependencies": {
     "koa": "^2.12.1",
     "koa-joi-controllers": "^1.2.2",
+    "lowdb": "^1.0.0",
     "reflect-metadata": "^0.1.13",
     "typedi": "^0.8.0"
   },
