@@ -6,6 +6,7 @@
     "outDir": "dist",
     "removeComments": true,
     "strict": true,
+    "checkJs": true,
     "allowJs": true,
     "strictPropertyInitialization": false,
     "resolveJsonModule": true,
@@ -21,6 +22,7 @@
     }
   },
   "include": [
+    "src/**/*.js",
     "src/**/*.ts",
     "tests/**/*.spec.ts"
   ],
