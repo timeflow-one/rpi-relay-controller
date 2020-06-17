@@ -81,6 +81,7 @@ export class LockManagers {
     const task = this.tasks.get(gpio[0])
     if (task) {
       clearTimeout(task)
+      this.tasks.delete(gpio[0])
     }
   }
 }
