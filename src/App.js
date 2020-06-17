@@ -38,6 +38,11 @@ class App {
   }
 }
 
+async function initRelays () {
+  // TODO (2020.06.17): Init all gpio before use relays
+  throw new Error('Not implemented')
+}
+
 async function main () {
   // create connection to database
   await createConnection()
