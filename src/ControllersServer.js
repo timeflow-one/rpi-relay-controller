@@ -1,28 +1,36 @@
 import Koa from 'koa'
-import { Service } from 'typedi'
+import { Service, Inject } from 'typedi'
 import { Logger } from './utils/Logger'
-import { configureRoutes } from 'koa-joi-controllers'
-import { LockController } from './controllers/LockController'
+import { configureRoutes, KoaController } from 'koa-joi-controllers'
+import { Constants } from './utils/Constants'
 
 @Service()
 export class ControllersServer {
   /**
    * @private
+   * @type {Array<KoaController>}
+   */
+  @Inject(Constants.CONTROLLERS)
+  controllers
+
+  /**
+   * @private
    * @type {import('http').Server}
    */
   server
-  
+
   /**
    * @protected
    * @type {Koa}
    */
   koaApplication
 
-  constructor () {
+  /**
+   * @public
+   */
+  async init () {
     this.koaApplication = new Koa()
-    configureRoutes(this.koaApplication, [
-      new LockController()
-    ], '/api')
+    configureRoutes(this.koaApplication, this.controllers)
   }
 
   /**
