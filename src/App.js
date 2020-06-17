@@ -4,6 +4,7 @@ import { ControllersServer } from './ControllersServer'
 import { Constants } from './utils/Constants'
 import { LockController } from './controllers/LockController'
 import { createConnection } from 'typeorm'
+import { ElectromagneticLockManager } from './managers/ElectromagneticLockManager'
 
 @Service()
 class App {
@@ -41,7 +42,9 @@ async function main () {
   // create connection to database
   await createConnection()
   // lock managers
-  Container.set(Constants.RELAYS_MANAGERS, [])
+  Container.set(Constants.RELAYS_MANAGERS, [
+    Container.get(ElectromagneticLockManager)
+  ])
   // koa controllers list
   Container.set(Constants.CONTROLLERS, [
     Container.get(LockController)
