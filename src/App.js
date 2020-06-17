@@ -39,12 +39,9 @@ class App {
 }
 
 /**
- * @typedef {object} DatabaseSchema
- * @property {Array<import('./models/LockModel').LockModel>} relays
- * @property {Array<import('./models/AccessModel').AccessModel>} access
+ * @typedef {import('./models/DatabaseModel').DatabaseSchema} DatabaseSchema
  *
  * @param {string} path path to database file
- *
  * @returns {import('lowdb').LowdbSync<DatabaseSchema>}
  */
 function initDatabase (path) {

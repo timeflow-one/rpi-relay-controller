@@ -2,6 +2,7 @@ import { KoaController, Controller, Post, Validate, Validator } from 'koa-joi-co
 import { Service, Inject } from 'typedi';
 import Lowdb from 'lowdb'
 import { Constants } from '@/utils/Constants';
+import { DatabaseCollections } from '@/models/DatabaseModel';
 
 @Service()
 @Controller('/lock')
@@ -29,7 +30,14 @@ export class LockController extends KoaController {
   })
   async open (ctx, next) {
     const source = ctx.request.body.source
-    // TODO (2020.06.17): Find controller
-    // const controller = ""
+    const controller = this.db
+      .get(DatabaseCollections.RELAYS)
+      // @ts-ignore
+      .find({ source })
+      .value()
+
+    // TODO (2020.06.17): Check 'controller', if undefined throw 404
+
+    await next()
   }
 }
