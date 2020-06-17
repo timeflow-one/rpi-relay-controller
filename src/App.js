@@ -3,8 +3,7 @@ import Container, { Inject, Service } from 'typedi'
 import { ControllersServer } from './ControllersServer'
 import { Constants } from './utils/Constants'
 import { LockController } from './controllers/LockController'
-import Lowdb from 'lowdb'
-import FileSync from 'lowdb/adapters/FileSync'
+import { createConnection } from 'typeorm'
 
 @Service()
 class App {
@@ -38,39 +37,9 @@ class App {
   }
 }
 
-/**
- * @typedef {import('./models/DatabaseModel').DatabaseSchema} DatabaseSchema
- *
- * @param {string} path path to database file
- * @returns {import('lowdb').LowdbSync<DatabaseSchema>}
- */
-function initDatabase (path) {
-  const adapter = new FileSync(path)
-  /**
-   * @type {import('lowdb').LowdbSync<DatabaseSchema>}
-   */
-  const db = Lowdb(adapter)
-  /**
-   * @type {DatabaseSchema}
-   */
-  const dbSchema = {
-    relays: [],
-    access: []
-  }
-
-  if (db.isEmpty()) {
-    // init default shema
-    db
-      .defaults(dbSchema)
-      .write()
-  }
-
-  return db
-}
-
 async function main () {
-  // Database
-  Container.set(Constants.DATABASE, initDatabase(String(process.env.DB_PATH)))
+  // create connection to database
+  await createConnection()
   // Koa controllers list
   Container.set(Constants.CONTROLLERS, [
     Container.get(LockController)
