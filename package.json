@@ -1,0 +1,27 @@
+{
+  "name": "rpi-relay-controller",
+  "version": "0.1.0",
+  "main": "dist/App.js",
+  "scripts": {
+    "start": "node -r dotenv/config -r ts-node/register -r tsconfig-paths/register src/App.ts",
+    "serve": "nodemon -e src/**/*.ts --exec \"npm start\"",
+    "build": "tsc -p tsconfig.json",
+    "runtime": "pm2-runtime dist/App.js --name rpi-relay-controller -i 1 --max-memory-restart 500M --time"
+  },
+  "dependencies": {
+    "koa": "^2.12.1",
+    "koa-joi-controllers": "^1.2.2"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.2.11",
+    "@types/dotenv": "^8.2.0",
+    "@types/mocha": "^7.0.2",
+    "chai": "^4.2.0",
+    "dotenv": "^8.2.0",
+    "mocha": "^8.0.1",
+    "nodemon": "^2.0.4",
+    "ts-node": "^8.10.2",
+    "tsconfig-paths": "^3.9.0",
+    "typescript": "^3.9.5"
+  }
+}
