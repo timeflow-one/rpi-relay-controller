@@ -1,28 +1,26 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
+import { Entity, Column, PrimaryColumn } from 'typeorm'
 import { LockType } from '@/models/LockType'
+import { BaseEntity } from './BaseEntity'
 
 @Entity()
-export class LockEntity {
+export class LockEntity extends BaseEntity {
   /**
-   * @type {number}
-   */
-  @PrimaryGeneratedColumn({
-    type: 'int'
-  })
-  id
-
-  /**
+   * Access point identifier, object name in the Timeflow
    * @type {string}
    */
   @Column({
-    type: 'text'
+    name: 'source',
+    type: 'text',
+    unique: true,
   })
   source
 
   /**
+   * GPIO's of relay. [?] for simple lock, [?,?] for complex lock
    * @type {Array<number>}
    */
   @Column({
+    name: 'locks',
     type: 'text',
     transformer: {
       /** @param {Array<number>} value */
@@ -41,6 +39,7 @@ export class LockEntity {
    * @type {LockType}
    */
   @Column({
+    name: 'type',
     type: 'text'
   })
   type
@@ -49,7 +48,8 @@ export class LockEntity {
    * @type {boolean}
    */
   @Column({
-    type: 'bool'
+    name: 'enabled',
+    type: 'boolean'
   })
   enabled
 }
