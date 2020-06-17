@@ -1,17 +1,31 @@
+import 'reflect-metadata'
+import Container from 'typedi'
+import { ControllersServer } from './ControllersServer'
+
 class App {
+  /**
+   * @private
+   * @type {import('./models/SimpleServer').SimpleServer}
+   */
+  server
+
+  constructor () {
+    this.server = Container.get(ControllersServer)
+  }
+
   /**
    * @public
    * @param {number} port
    */
   start (port) {
-    // TODO (2020.06.17): Start controller's server
+    this.server.start(port)
   }
 
   /**
    * @public
    */
   stop () {
-    // TODO (2020.06.17): Stop controller's server
+    this.server.stop()
   }
 }
 
