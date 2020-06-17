@@ -1,18 +1,18 @@
 import { KoaController, Controller, Post, Validate, Validator } from 'koa-joi-controllers';
 import { Service, Inject } from 'typedi';
-import Lowdb from 'lowdb'
+import { getConnection } from 'typeorm';
+import { LockEntity } from '@/database/entities/LockEntity';
+import { AccessEntity } from '@/database/entities/AccessEntity';
 import { Constants } from '@/utils/Constants';
-import { DatabaseCollections } from '@/models/DatabaseModel';
 
 @Service()
 @Controller('/lock')
 export class LockController extends KoaController {
   /**
-   * @private
-   * @type {Lowdb.LowdbSync<any>}
+   * @type {Array<import('@/managers/LockManager').LockManager>}
    */
-  @Inject(Constants.DATABASE)
-  db
+  @Inject(Constants.RELAYS_MANAGERS)
+  locksManagers
 
   /**
    * @private
@@ -25,18 +25,39 @@ export class LockController extends KoaController {
     body: {
       source: Validator.Joi
         .string()
+        .required(),
+
+      initiator: Validator.Joi
+        .string()
         .required()
     }
   })
   async open (ctx, next) {
-    const source = ctx.request.body.source
-    const controller = this.db
-      .get(DatabaseCollections.RELAYS)
-      // @ts-ignore
-      .find({ source })
-      .value()
+    const lock = await getConnection()
+      .getRepository(LockEntity)
+      .findOneOrFail({
+        source: ctx.request.body.source
+      })
 
-    // TODO (2020.06.17): Check 'controller', if undefined throw 404
+    // Open lock
+    await this.locksManagers
+      .find(it => it.type == lock.type)
+      ?.open(lock.locks)
+
+    // Logging entering
+    const accessRepository = await getConnection()
+      .getRepository(AccessEntity)
+
+    await accessRepository.save(accessRepository.create({
+      source: ctx.request.body.source,
+      initiator: ctx.request.body.initiator
+    }))
+
+    ctx.status = 200
+    ctx.body = {
+      lock,
+      access: await accessRepository.find()
+    }
 
     await next()
   }
