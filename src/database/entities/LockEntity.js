@@ -12,6 +12,7 @@ export class LockEntity extends BaseEntity {
     name: 'source',
     type: 'text',
     unique: true,
+    nullable: false
   })
   source
 
@@ -31,7 +32,8 @@ export class LockEntity extends BaseEntity {
       from (value) {
         return JSON.parse(value)
       }
-    }
+    },
+    nullable: false
   })
   locks
 
@@ -40,7 +42,8 @@ export class LockEntity extends BaseEntity {
    */
   @Column({
     name: 'type',
-    type: 'text'
+    type: 'text',
+    nullable: false
   })
   type
 
@@ -49,7 +52,18 @@ export class LockEntity extends BaseEntity {
    */
   @Column({
     name: 'enabled',
-    type: 'boolean'
+    type: 'boolean',
+    nullable: false
   })
   enabled
+
+  /**
+   * @type {number}
+   */
+  @Column({
+    name: 'timeout',
+    type: 'int',
+    nullable: false
+  })
+  timeout
 }

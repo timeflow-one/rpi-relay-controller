@@ -42,21 +42,22 @@ export class LockController extends KoaController {
     // Open lock
     await this.locksManagers
       .find(it => it.type == lock.type)
-      ?.open(lock.locks)
+      ?.open(lock.locks, lock.timeout)
 
     // Logging entering
     const accessRepository = await getConnection()
       .getRepository(AccessEntity)
 
-    await accessRepository.save(accessRepository.create({
+    const accessLogRecord = await accessRepository.save(accessRepository.create({
       source: ctx.request.body.source,
       initiator: ctx.request.body.initiator
     }))
 
     ctx.status = 200
     ctx.body = {
-      lock,
-      access: await accessRepository.find()
+      source: ctx.request.body.source,
+      initiator: ctx.request.body.initiator,
+      timestamp: accessLogRecord.createdAt
     }
 
     await next()
