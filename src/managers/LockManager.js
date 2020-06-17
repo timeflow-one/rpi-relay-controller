@@ -3,12 +3,13 @@ import Exec from 'child_process'
 /**
  * @abstract
  */
-export class LockManagers {
+export class LockManager {
   /**
    * @private
+   * @readonly
    * @type {Map<number, NodeJS.Timeout>}
    */
-  tasks
+  tasks = new Map()
 
   /**
    * @public
@@ -65,23 +66,23 @@ export class LockManagers {
 
   /**
    * @protected
-   * @param {Array<number>} gpio
+   * @param {number} gpio
    * @param {number} timeout
    */
   addCloseLockTask (gpio, timeout) {
-    const closeLockTask = setTimeout(() => this.close(gpio), timeout)
-    this.tasks.set(gpio[0], closeLockTask)
+    const closeLockTask = setTimeout(() => this.close([gpio]), timeout)
+    this.tasks.set(gpio, closeLockTask)
   }
 
   /**
    * @protected
-   * @param {Array<number>} gpio
+   * @param {number} gpio
    */
   cancelCloseLockTask (gpio) {
-    const task = this.tasks.get(gpio[0])
+    const task = this.tasks.get(gpio)
     if (task) {
       clearTimeout(task)
-      this.tasks.delete(gpio[0])
+      this.tasks.delete(gpio)
     }
   }
 }

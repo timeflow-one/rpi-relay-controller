@@ -1,19 +1,28 @@
 import { Service } from 'typedi';
 import { LockType } from '@/models/LockType';
-import { LockManagers } from './LockManagers';
+import { LockManager } from './LockManager';
+import Exec from 'child_process'
 
 @Service()
-export class ElectromagneticLockManager extends LockManagers {
+export class ElectromagneticLockManager extends LockManager {
+  /**
+   * @public
+   * @readonly
+   */
   type = LockType.ELECTROMAGNETIC
 
   /**
    * @override
    * @public
    * @param {Array<number>} gpio
+   * @param {number} timeout
    * @returns {Promise<any>}
    */
-  open (gpio) {
-    throw new Error('Not implemented')
+  async open (gpio, timeout) {
+    const lockRelay = gpio[0]
+    this.cancelCloseLockTask(lockRelay)
+    this.setLow(lockRelay)
+    this.addCloseLockTask(lockRelay, timeout)
   }
 
   /**
@@ -21,18 +30,9 @@ export class ElectromagneticLockManager extends LockManagers {
    * @param {Array<number>} gpio
    * @returns {Promise<any>}
    */
-  close (gpio) {
-    throw new Error('Must be implemented!')
-  }
-
-  /**
-   * @override
-   * @public
-   * @param {Array<number>} gpio
-   * @returns {Promise<any>}
-   */
-  init (gpio) {
-    throw new Error('Not implemented')
+  async close (gpio) {
+    const lockRelay = gpio[0]
+    this.setHigh(lockRelay)
   }
 
   /**
@@ -41,7 +41,21 @@ export class ElectromagneticLockManager extends LockManagers {
    * @param {Array<number>} gpio
    * @returns {Promise<any>}
    */
-  flush (gpio) {
-    throw new Error('Not implemented')
+  async init (gpio) {
+    const lockRelay = gpio[0]
+    Exec.execSync(`echo ${lockRelay} > /sys/class/gpio/export`)
+    Exec.execSync(`echo out > /sys/class/gpio/gpio${lockRelay}/direction`)
+    Exec.execSync(`echo 1 > /sys/class/gpio/gpio${lockRelay}/value`)
+  }
+
+  /**
+   * @override
+   * @public
+   * @param {Array<number>} gpio
+   * @returns {Promise<any>}
+   */
+  async flush (gpio) {
+    const lockRelay = gpio[0]
+    Exec.execSync(`echo ${lockRelay} > /sys/class/gpio/unexport`)
   }
 }
