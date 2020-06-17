@@ -40,7 +40,9 @@ class App {
 async function main () {
   // create connection to database
   await createConnection()
-  // Koa controllers list
+  // lock managers
+  Container.set(Constants.RELAYS_MANAGERS, [])
+  // koa controllers list
   Container.set(Constants.CONTROLLERS, [
     Container.get(LockController)
   ])
