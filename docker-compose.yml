@@ -1,0 +1,32 @@
+version: 3.5
+services:
+  rpi-relay-controller:
+    container_name: rpi-relay-controller
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+    expose:
+      - 8080
+    networks:
+      - network-bridge
+    command: npm run runtime
+
+  nginx:
+    image: nginx:mainline-alpine
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - 80:80
+    volumes:
+      - './nginx:/etc/nginx/conf.d'
+      # static files
+      # - './pages:/var/www/page'
+    networks:
+      - network-bridge
+
+networks:
+  network-bridge:
+    driver: bridge
