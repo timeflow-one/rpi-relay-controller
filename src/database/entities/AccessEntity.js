@@ -8,7 +8,8 @@ export class AccessEntity extends BaseEntity {
    */
   @Column({
     name: 'initiator',
-    type: 'text'
+    type: 'text',
+    nullable: false
   })
   initiator
 
@@ -18,7 +19,8 @@ export class AccessEntity extends BaseEntity {
    */
   @Column({
     name: 'source',
-    type: 'text'
+    type: 'text',
+    nullable: false
   })
   source
 }
