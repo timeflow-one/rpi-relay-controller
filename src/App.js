@@ -43,7 +43,7 @@ async function main () {
 
   const app = Container.get(App)
 
-  process.on('SIGINT', app.stop)
+  process.on('SIGINT', () => app.stop())
   await app.init()
   await app.start(Number(process.env.PORT))
 }

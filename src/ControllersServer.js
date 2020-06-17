@@ -46,7 +46,7 @@ export class ControllersServer {
    * @public
    */
   async stop () {
-    if (this.server)
+    if (this.server && this.server.listening)
       this.server.close((err) => Logger.info(ControllersServer.name, `Server has been stop, err: ${err}`))
     else
       Logger.info(ControllersServer.name, 'Server already stopped or was not running')
