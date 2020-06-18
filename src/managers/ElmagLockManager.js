@@ -7,10 +7,11 @@ import { RelayEntity } from '@/database/entities/RelayEntity';
 import { ConfigureException } from '@/exceptions/ConfigureException';
 
 @Service()
-export class ElectromagneticLockManager extends LockManager {
+export class ElemagLockManager extends LockManager {
   /**
    * @public
    * @readonly
+   * @type {LockType}
    */
   type = LockType.ELECTROMAGNETIC
 
