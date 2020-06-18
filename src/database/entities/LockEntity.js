@@ -1,6 +1,8 @@
-import { Entity, Column, PrimaryColumn } from 'typeorm'
+import { Entity, Column, OneToMany, OneToOne, JoinColumn, Unique } from 'typeorm'
 import { LockType } from '@/models/LockType'
 import { BaseEntity } from './BaseEntity'
+import { RelayEntity } from './RelayEntity'
+import { RelayDirectionEntity } from './RelayDirectionEntity'
 
 @Entity()
 export class LockEntity extends BaseEntity {
@@ -15,27 +17,6 @@ export class LockEntity extends BaseEntity {
     nullable: false
   })
   source
-
-  /**
-   * GPIO's of relay. [?] for simple lock, [?,?] for complex lock
-   * @type {Array<number>}
-   */
-  @Column({
-    name: 'locks',
-    type: 'text',
-    transformer: {
-      /** @param {Array<number>} value */
-      to (value) {
-        return JSON.stringify(value)
-      },
-      /** @param {string} value */
-      from (value) {
-        return JSON.parse(value)
-      }
-    },
-    nullable: false
-  })
-  locks
 
   /**
    * @type {LockType}
@@ -53,7 +34,8 @@ export class LockEntity extends BaseEntity {
   @Column({
     name: 'enabled',
     type: 'boolean',
-    nullable: false
+    nullable: false,
+    default: true
   })
   enabled
 
@@ -63,7 +45,17 @@ export class LockEntity extends BaseEntity {
   @Column({
     name: 'timeout',
     type: 'int',
-    nullable: false
+    nullable: false,
+    default: 5000
   })
   timeout
+
+  /**
+   * @type {Array<RelayDirectionEntity>}
+   */
+  @OneToMany(type => RelayDirectionEntity, relay => relay.lock, {
+    eager: true,
+    cascade: true
+  })
+  relays
 }

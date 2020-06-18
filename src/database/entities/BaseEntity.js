@@ -17,7 +17,8 @@ export class BaseEntity {
    */
   @CreateDateColumn({
     name: 'created_at',
-    type: 'datetime'
+    type: 'datetime',
+    readonly: true
   })
   createdAt
 
@@ -26,7 +27,8 @@ export class BaseEntity {
    */
   @UpdateDateColumn({
     name: 'updated_at',
-    type: 'datetime'
+    type: 'datetime',
+    readonly: true
   })
   updatedAt
 }

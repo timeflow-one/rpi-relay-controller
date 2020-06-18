@@ -1,9 +1,19 @@
 import Exec from 'child_process'
+import { LockType } from '@/models/LockType'
+import { LockEntity } from '@/database/entities/LockEntity'
+import { RelayEntity } from '@/database/entities/RelayEntity'
 
 /**
  * @abstract
  */
 export class LockManager {
+  /**
+   * @abstract
+   * @readonly
+   * @type {LockType}
+   */
+  type
+
   /**
    * @private
    * @readonly
@@ -12,77 +22,77 @@ export class LockManager {
   tasks = new Map()
 
   /**
-   * @public
-   * @param {Array<number>} gpio
+   * @abstract
+   * @param {LockEntity} lock
    * @param {number} timeout
    * @returns {Promise<any>}
    */
-  open (gpio, timeout) {
+  open (lock, timeout) {
     throw new Error('Must be implemented!')
   }
 
   /**
-   * @public
-   * @param {Array<number>} gpio
+   * @abstract
+   * @param {LockEntity} lock
    * @returns {Promise<any>}
    */
-  close (gpio) {
+  close (lock) {
     throw new Error('Must be implemented!')
   }
 
   /**
-   * @public
-   * @param {Array<number>} gpio
+   * @abstract
+   * @param {LockEntity} lock
    * @returns {Promise<any>}
    */
-  init (gpio) {
+  init (lock) {
     throw new Error('Must be implemented!')
   }
 
   /**
-   * @public
-   * @param {Array<number>} gpio
+   * @abstract
+   * @param {LockEntity} lock
    * @returns {Promise<any>}
    */
-  flush (gpio) {
+  flush (lock) {
     throw new Error('Must be implemented!')
   }
 
   /**
    * @protected
-   * @param {number} gpio
+   * @param {RelayEntity} gpio
    */
   setHigh (gpio) {
-    Exec.execSync(`echo 1 > /sys/class/gpio/gpio${gpio}/value`)
+    Exec.execSync(`echo 1 > /sys/class/gpio/gpio${gpio.gpio}/value`)
   }
 
   /**
    * @protected
-   * @param {number} gpio
+   * @param {RelayEntity} gpio
    */
   setLow (gpio) {
-    Exec.execSync(`echo 0 > /sys/class/gpio/gpio${gpio}/value`)
+    Exec.execSync(`echo 0 > /sys/class/gpio/gpio${gpio.gpio}/value`)
   }
 
   /**
    * @protected
-   * @param {number} gpio
+   * @param {LockEntity} lock
    * @param {number} timeout
    */
-  addCloseLockTask (gpio, timeout) {
-    const closeLockTask = setTimeout(() => this.close([gpio]), timeout)
-    this.tasks.set(gpio, closeLockTask)
+  addCloseLockTask (lock, timeout) {
+    const closeLockTask = setTimeout(() => this.close(lock), timeout)
+    this.tasks.set(lock.id, closeLockTask)
   }
 
   /**
    * @protected
-   * @param {number} gpio
+   * @param {LockEntity} lock
    */
-  cancelCloseLockTask (gpio) {
-    const task = this.tasks.get(gpio)
+  cancelCloseLockTask (lock) {
+    const task = this.tasks.get(lock.id)
     if (task) {
       clearTimeout(task)
-      this.tasks.delete(gpio)
+      this.tasks.delete(lock.id)
     }
   }
 }

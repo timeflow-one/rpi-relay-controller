@@ -3,3 +3,8 @@ export enum LockType {
   ELECTROMECHANICAL = 'electromechanical',
   ELECTRIC = 'electric'
 }
+
+export enum RelayDirection {
+  IN,
+  OUT
+}
