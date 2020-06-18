@@ -8,6 +8,19 @@ services:
       dockerfile: Dockerfile
     environment:
       NODE_ENV: production
+      PORT: 8080
+      LOCK_TIMEOUT: 5000
+      AVAILABLE_RELAYS: config/available_relays.json
+      VAILABLE_LOCKS: config/available_locks.json
+      TYPEORM_CONNECTION: sqlite
+      TYPEORM_DATABASE: db/db.sqlite
+      TYPEORM_ENTITIES: src/database/entities/*.js
+      TYPEORM_MIGRATIONS: src/database/migrations/*.js
+      TYPEORM_SUBSCRIBERS: src/database/subscribers/*.js
+      TYPEORM_ENTITIES_DIR: src/database/entities
+      TYPEORM_MIGRATIONS_DIR: src/database/migrations
+      TYPEORM_SUBSCRIBERS_DIR: src/database/subscribers
+      TYPEORM_LOGGING: false
     expose:
       - 8080
     networks:
