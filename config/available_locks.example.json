@@ -1,0 +1,16 @@
+[
+  {
+    "source": "source-name",
+    "type": "type-name",
+    "enabled": true,
+    "timeout": 3000,
+    "relays": [
+      {
+        "direction": 0,
+        "relay": {
+          "gpio": 23
+        }
+      }
+    ]
+  }
+]

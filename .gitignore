@@ -105,3 +105,7 @@ dist
 
 # Project database directory
 db
+
+# Config files
+available_locks.json
+available_relays.json
