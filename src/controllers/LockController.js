@@ -42,7 +42,7 @@ export class LockController extends KoaController {
     // Open lock
     await this.locksManagers
       .find(it => it.type == lock.type)
-      ?.open(lock.locks, lock.timeout)
+      ?.open(lock, lock.timeout)
 
     // Logging entering
     const accessRepository = await getConnection()

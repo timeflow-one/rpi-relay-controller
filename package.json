@@ -6,7 +6,8 @@
     "start": "node -r dotenv/config -r ts-node/register -r tsconfig-paths/register src/App.js",
     "serve": "nodemon -e src/**/*.js --exec \"npm start\"",
     "build": "tsc -p tsconfig.json",
-    "runtime": "pm2-runtime dist/App.js --name rpi-relay-controller -i 1 --max-memory-restart 500M --time"
+    "runtime": "pm2-runtime dist/App.js --name rpi-relay-controller -i 1 --max-memory-restart 500M --time",
+    "typeorm": "node -r dotenv/config -r ts-node/register -r tsconfig-paths/register node_modules/typeorm/cli"
   },
   "dependencies": {
     "koa": "^2.12.1",
