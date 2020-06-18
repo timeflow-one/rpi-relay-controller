@@ -9,8 +9,7 @@ export class InitLocks1592499678623 {
    */
   async up (queryRunner) {
     /** @type {Array<LockEntity>} */
-    // @ts-ignore
-    const availableLocks = require('#/config/available_locks.json')
+    const availableLocks = require(String(process.env.AVAILABLE_LOCKS))
     const lockRepository = queryRunner.connection.getRepository(LockEntity)
     const relayRepository = queryRunner.connection.getRepository(RelayEntity)
 

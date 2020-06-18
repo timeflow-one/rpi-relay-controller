@@ -22,7 +22,8 @@ export class LockEntity extends BaseEntity {
    */
   @Column({
     name: 'type',
-    type: 'text',
+    type: 'simple-enum',
+    enum: LockType,
     nullable: false
   })
   type

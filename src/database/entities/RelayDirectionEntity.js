@@ -12,7 +12,8 @@ export class RelayDirectionEntity extends BaseEntity {
    */
   @Column({
     name: 'direction',
-    type: 'int',
+    type: 'simple-enum',
+    enum: RelayDirection,
     nullable: false,
     default: RelayDirection.IN
   })

@@ -8,7 +8,7 @@ export class InitRelays1592487250047 {
    */
   async up (queryRunner) {
     /** @type {Array<number>} */
-    const availableRelays = require('#/config/available_relays.json')
+    const availableRelays = require(String(process.env.AVAILABLE_RELAYS))
     const relayRepository = queryRunner.connection.getRepository(RelayEntity)
 
     for (let relay of availableRelays) {
