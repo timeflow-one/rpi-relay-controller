@@ -1,7 +1,6 @@
 import { Entity, Column, OneToMany, OneToOne, JoinColumn, Unique } from 'typeorm'
 import { LockType } from '@/models/LockType'
 import { BaseEntity } from './BaseEntity'
-import { RelayEntity } from './RelayEntity'
 import { RelayDirectionEntity } from './RelayDirectionEntity'
 
 @Entity()

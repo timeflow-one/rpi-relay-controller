@@ -1,0 +1,30 @@
+[
+  {
+    "source": "test",
+    "type": "electric",
+    "enabled": true,
+    "timeout": 3000,
+    "relays": [
+      {
+        "direction": 0,
+        "relay": {
+          "gpio": 23
+        }
+      }
+    ]
+  },
+  {
+    "source": "test1",
+    "type": "electric",
+    "enabled": true,
+    "timeout": 3000,
+    "relays": [
+      {
+        "direction": 0,
+        "relay": {
+          "gpio": 23
+        }
+      }
+    ]
+  }
+]

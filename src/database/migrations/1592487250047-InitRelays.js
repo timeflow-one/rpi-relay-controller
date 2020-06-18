@@ -1,7 +1,7 @@
 import { QueryRunner } from 'typeorm'
 import { RelayEntity } from '../entities/RelayEntity'
 
-export class InitDatabase1592487250047 {
+export class InitRelays1592487250047 {
   /**
    * @param {QueryRunner} queryRunner
    * @returns {Promise<void>}

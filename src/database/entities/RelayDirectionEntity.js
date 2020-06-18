@@ -5,6 +5,7 @@ import { RelayDirection } from '@/models/LockType';
 import { LockEntity } from './LockEntity';
 
 @Entity()
+@Unique(['id', 'lock'])
 export class RelayDirectionEntity extends BaseEntity {
   /**
    * @type {RelayDirection}
@@ -24,7 +25,7 @@ export class RelayDirectionEntity extends BaseEntity {
     cascade: true
   })
   @JoinColumn({
-    name: 'relay'
+    name: 'id'
   })
   relay
 
@@ -33,7 +34,7 @@ export class RelayDirectionEntity extends BaseEntity {
    */
   @ManyToOne(type => LockEntity, lock => lock.relays)
   @JoinColumn({
-    name: 'lock'
+    name: 'id'
   })
   lock
 }

@@ -8,7 +8,8 @@ export class BaseEntity {
    * @type {number}
    */
   @PrimaryGeneratedColumn({
-    type: 'int'
+    type: 'int',
+    name: 'id'
   })
   id
 
