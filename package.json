@@ -6,26 +6,26 @@
     "start": "node -r dotenv/config -r ts-node/register -r tsconfig-paths/register src/App.js",
     "serve": "nodemon -e src/**/*.js --exec \"npm start\"",
     "build": "tsc -p tsconfig.json",
-    "runtime": "pm2-runtime dist/App.js --name rpi-relay-controller -i 1 --max-memory-restart 500M --time",
+    "runtime": "pm2-runtime ecosystem.config.js",
     "typeorm": "node -r dotenv/config -r ts-node/register -r tsconfig-paths/register node_modules/typeorm/cli"
   },
   "dependencies": {
+    "@types/koa-joi-router": "^5.2.3",
     "koa": "^2.12.1",
     "koa-joi-controllers": "^1.2.2",
     "reflect-metadata": "^0.1.13",
     "sqlite3": "^4.2.0",
     "typedi": "^0.8.0",
-    "typeorm": "^0.2.25"
-  },
-  "devDependencies": {
-    "@types/dotenv": "^8.2.0",
-    "@types/koa-joi-router": "^5.2.3",
-    "@types/node": "^14.0.13",
-    "dotenv": "^8.2.0",
-    "eslint": "^7.2.0",
-    "nodemon": "^2.0.4",
+    "typeorm": "^0.2.25",
     "ts-node": "^8.10.2",
     "tsconfig-paths": "^3.9.0",
     "typescript": "^3.9.5"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^8.2.0",
+    "@types/node": "^14.0.13",
+    "dotenv": "^8.2.0",
+    "eslint": "^7.2.0",
+    "nodemon": "^2.0.4"
   }
 }
