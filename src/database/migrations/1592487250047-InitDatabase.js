@@ -7,6 +7,7 @@ export class InitDatabase1592487250047 {
    * @returns {Promise<void>}
    */
   async up (queryRunner) {
+    /** @type {Array<number>} */
     const availableRelays = require('#/config/available_relays.json')
     const relayRepository = queryRunner.connection.getRepository(RelayEntity)
 
