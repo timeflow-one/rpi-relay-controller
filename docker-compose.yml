@@ -35,8 +35,7 @@ services:
       - 80:80
     volumes:
       - './nginx:/etc/nginx/conf.d'
-      # static files
-      # - './pages:/var/www/page'
+      - './pages:/var/www/page'
     networks:
       - network-bridge
 
