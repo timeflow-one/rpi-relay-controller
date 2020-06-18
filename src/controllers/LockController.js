@@ -4,6 +4,7 @@ import { getConnection } from 'typeorm';
 import { LockEntity } from '@/database/entities/LockEntity';
 import { AccessEntity } from '@/database/entities/AccessEntity';
 import { Constants } from '@/utils/Constants';
+import { ConfigureException } from '@/exceptions/ConfigureException';
 
 @Service()
 @Controller('/lock')
@@ -11,7 +12,7 @@ export class LockController extends KoaController {
   /**
    * @type {Array<import('@/managers/LockManager').LockManager>}
    */
-  @Inject(Constants.RELAYS_MANAGERS)
+  @Inject(Constants.LOCKS_MANAGERS)
   locksManagers
 
   /**
@@ -40,9 +41,12 @@ export class LockController extends KoaController {
       })
 
     // Open lock
-    await this.locksManagers
-      .find(it => it.type == lock.type)
-      ?.open(lock, lock.timeout)
+    const lockManager = this.locksManagers.find(it => it.type == lock.type)
+
+    if (!lockManager)
+      throw new ConfigureException(`Missing manager for '${lock.type}' lock`)
+
+    await lockManager.open(lock, lock.timeout)
 
     // Logging entering
     const accessRepository = await getConnection()

@@ -4,6 +4,7 @@ import { LockManager } from './LockManager';
 import Exec from 'child_process'
 import { LockEntity } from '@/database/entities/LockEntity';
 import { RelayEntity } from '@/database/entities/RelayEntity';
+import { ConfigureException } from '@/exceptions/ConfigureException';
 
 @Service()
 export class ElectromagneticLockManager extends LockManager {
@@ -65,7 +66,7 @@ export class ElectromagneticLockManager extends LockManager {
   getRelay (lock) {
     const relay = lock.relays.find(it => it.direction == RelayDirection.IN)
     if (!relay)
-      throw new Error('lock is not configured')
+      throw new ConfigureException(`Lock '${lock.source}' is not configured`)
 
     return relay.relay
   }
