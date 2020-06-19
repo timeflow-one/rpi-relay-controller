@@ -104,7 +104,8 @@ dist
 .tern-port
 
 # Project database directory
-db
+db/*
+!db/.gitkeep
 
 # Config files
 available_locks.json
