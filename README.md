@@ -41,7 +41,40 @@ cd ~/rpi-relay-controller
 ### Конфигурационный файл релейного модуля
 
 1. Получение конфигурационного файла для релейного модуля
-<!-- TODO получение конфигурационного файла для каждого релейного модуля -->
+
+   * Конфигурация для 8и релейного модуля:
+
+<!-- Добавить пропущенные gpio -->
+```{sh}
+echo '[5,6,13,16,19]' > config/available_relays.json
+```
+
+   <!-- * Конфигурация для 3х релейного модуля:
+
+```{sh}
+echo '[]' > config/available_relays.json
+```
+
+   * Конфигурация для 4х релейного модуля:
+
+```{sh}
+echo '[]' > config/available_relays.json
+``` -->
+
+Формат конфигурационного файла релейного модуля
+
+```{json}
+[
+  23,
+  43,
+  ...
+]
+```
+
+```{sh}
+cp config/available_locks.example.json config/available_locks.json
+nano config/available_locks.json
+```
 
 2. Конфигурация замков
 
@@ -66,7 +99,7 @@ cd ~/rpi-relay-controller
 }
 ```
 
-3. Выполните конфигурацию замков
+Выполните конфигурацию замков
 
 ```{sh}
 cp config/available_locks.example.json config/available_locks.json
