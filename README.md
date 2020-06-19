@@ -13,7 +13,7 @@
 ```{sh}
 sudo apt-get update && sudo apt-get upgrade
 sudo apt install apache2-utils -y
-sudo apt install git -y2
+sudo apt install git -y
 sudo apt-get install apt-transport-https ca-certificates software-properties-common -y
 ```
 
@@ -40,7 +40,7 @@ cd ~/rpi-relay-controller
 
 ### Конфигурационный файл релейного модуля
 
-1. Получение конфигурационного файла для релейного модуля
+1. Выполните скрипт конфигурации для вашего релейного модуля
 
    * Конфигурация для 8и релейного модуля:
 
@@ -60,21 +60,6 @@ echo '[]' > config/available_relays.json
 ```{sh}
 echo '[]' > config/available_relays.json
 ``` -->
-
-Формат конфигурационного файла релейного модуля
-
-```{json}
-[
-  23,
-  43,
-  ...
-]
-```
-
-```{sh}
-cp config/available_locks.example.json config/available_locks.json
-nano config/available_locks.json
-```
 
 2. Конфигурация замков
 
