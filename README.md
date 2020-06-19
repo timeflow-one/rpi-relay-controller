@@ -66,7 +66,7 @@ cd ~/rpi-relay-controller
 }
 ```
 
-Выполните конфигурацию замков
+3. Выполните конфигурацию замков
 
 ```{sh}
 cp config/available_locks.example.json config/available_locks.json
