@@ -61,6 +61,7 @@ export class ControllersServer {
     this.koaApplication.use((ctx, next) => next().catch((err) => {
       if (!err.status) {
         switch (err.name) {
+          case 'EntityNotFound':
           case 'ValidationError':
           case 'QueryFailedError':
             err.status = 400;
