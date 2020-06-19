@@ -37,7 +37,8 @@ export class LockController extends KoaController {
     const lock = await getConnection()
       .getRepository(LockEntity)
       .findOneOrFail({
-        source: ctx.request.body.source
+        source: ctx.request.body.source,
+        enabled: true
       })
 
     // Open lock
