@@ -60,9 +60,11 @@ export class LockController extends KoaController {
 
     ctx.status = 200
     ctx.body = {
-      source: ctx.request.body.source,
-      initiator: ctx.request.body.initiator,
-      timestamp: accessLogRecord.createdAt
+      data: {
+        source: ctx.request.body.source,
+        initiator: ctx.request.body.initiator,
+        timestamp: accessLogRecord.createdAt
+      }
     }
 
     await next()
