@@ -124,3 +124,43 @@ sh scripts/test.sh
 <!-- ## Пользовательский интерфейс -->
 
 ## API
+
+#### POST `/lock/open`
+
+*Запрос на открытие двери*
+
+Заголовки:
+
+* Authorization: Basic *TOKEN*
+* Content-Type: application/json
+
+JSON-тело запроса:
+
+| Параметр  | Тип    | Описание                             |
+|-----------|:------:|--------------------------------------|
+| source    | строка | Название объекта (проходного пункта) |
+| initiator | строка | Инициатор запроса                    |
+
+Примеры ответов:
+
+**200 OK**
+```{json}
+{
+  "data": {
+    "source": "sample-source",
+    "initiator": "sample-initiator",
+    "timestamp": "2020-06-22T11:58:44Z" // ISO 8601
+  }
+}
+```
+
+
+**Запрос, выполненный с ошибкой**
+```{json}
+{
+  "error": {
+    "name": "error-title",
+    "detail": "error-detail"
+  }
+}
+```
