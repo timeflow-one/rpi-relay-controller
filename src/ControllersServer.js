@@ -78,8 +78,10 @@ export class ControllersServer {
     this.koaApplication.on('error', (err, ctx) => {
       ctx.status = err.status || 500
       ctx.body = {
-        title: err.name,
-        detail: err.detail || err.msg || err.message || 'Internal Server Error'
+        error: {
+          title: err.name,
+          detail: err.detail || err.msg || err.message || 'Internal Server Error'
+        }
       }
     })
   }
