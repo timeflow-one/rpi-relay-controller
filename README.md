@@ -1,4 +1,4 @@
-# Raspberry ACS controller
+# RPI relay controller
 
 ## Требования
 
