@@ -17,19 +17,20 @@ sudo apt install git -y
 sudo apt-get install apt-transport-https ca-certificates software-properties-common -y
 ```
 
-2. Установите docker
+2. Установите docker и docker-compose
 
 ```{sh}
 curl -fsSL https://get.docker.com -o /tmp/get-docker.sh
 sudo sh /tmp/get-docker.sh
 sudo usermod -aG docker pi
 docker version
+sudo pip3 install docker-compose
 ```
 
 3. Выкачайте ветку проекта в домашнюю директорию
 
 ```{sh}
-git clone https://github.com/nionoku/rpi-relay-controller
+git clone https://github.com/timeflow-one/rpi-relay-controller.git
 ```
 
 4. Перейдите в директорию с проектом
@@ -44,12 +45,11 @@ cd ~/rpi-relay-controller
 
    * Конфигурация для 8и релейного модуля:
 
-<!-- Добавить пропущенные gpio -->
 ```{sh}
 echo '[5,6,13,16,19]' > config/available_relays.json
 ```
 
-   <!-- * Конфигурация для 3х релейного модуля:
+   * Конфигурация для 3х релейного модуля:
 
 ```{sh}
 echo '[]' > config/available_relays.json
@@ -59,32 +59,9 @@ echo '[]' > config/available_relays.json
 
 ```{sh}
 echo '[]' > config/available_relays.json
-``` -->
+``` 
 
-2. Конфигурация замков
-
-Формат конфигурации замка:
-
-<!-- или electric (электромоторный, недоступен) -->
-<!-- Для электромоторного - одно реле на открытие, второе - на закрытие -->
-```{json}
-{
-  "source": "source-name", // название объекта, как в сервисе Timeflow
-  "type": "electromagnetic", // тип замка: electromagnetic (электромагнитный), electromechanical (электромеханический)
-  "enabled": true, // флаг доступности контроллера
-  "timeout": 3000, // таймаут, спустя который замок будет закрыт
-  "relays": [ // список реле, с которыми работает замок
-    {
-      "direction": 0, // направление реле. 0 - открытие, 1 - закрытие. Для электромагнитного и электромеханического всегда 0
-      "relay": {
-        "gpio": 23 // номер gpio, с которым работает реле
-      }
-    }
-  ]
-}
-```
-
-Выполните конфигурацию замков
+2. Выполните конфигурацию замков (формат конфигурации замка в **Приложении 1**)
 
 ```{sh}
 cp config/available_locks.example.json config/available_locks.json
@@ -112,16 +89,6 @@ docker-compose -f docker-compose.yml build
 ```{sh}
 docker-compose -f docker-compose.yml up
 ```
-
-## Тестовый доступ
-
-Для тестирования замков выполните следующую скрипт:
-
-```{sh}
-sh scripts/test.sh
-```
-
-<!-- ## Пользовательский интерфейс -->
 
 ## API
 
@@ -162,5 +129,34 @@ JSON-тело запроса:
     "name": "error-title",
     "detail": "error-detail"
   }
+}
+```
+
+## Приложение 1. Формат конфигурации замка
+
+Типы замков:
+
+* `direct`:
+   * Электромагнитный;
+   * Электромеханический;
+* `composite`:
+   * Электромоторный;
+
+Формат конфигурации замка:
+
+```{json}
+{
+  "destination": "destination-name", // название объекта, как в сервисе Timeflow
+  "type": "direct", // см. Приложение 1: Типы замков
+  "enabled": true, // флаг доступности контроллера
+  "timeout": 3000, // таймаут, спустя который замок будет закрыт
+  "relays": [ // список реле, с которыми работает замок
+    {
+      "direction": 0, // направление реле. 0 - открытие, 1 - закрытие. Для типа direct всегда 0
+      "relay": {
+        "gpio": 23 // номер gpio, с которым работает реле
+      }
+    }
+  ]
 }
 ```
