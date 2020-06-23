@@ -4,11 +4,10 @@ import { ControllersServer } from './ControllersServer'
 import { Constants } from './utils/Constants'
 import { LockController } from './controllers/LockController'
 import { createConnection, getConnection } from 'typeorm'
-import { ElemagLockManager } from './managers/ElmagLockManager'
+import { DirectLockManager } from './managers/DirectLockManager'
 import { LockEntity } from './database/entities/LockEntity'
 import { LockManager } from './managers/LockManager'
 import { ConfigureException } from './exceptions/ConfigureException'
-import { ElmechLockManager } from './managers/ElmechLockManager'
 
 @Service()
 class App {
@@ -64,8 +63,7 @@ async function main () {
   await createConnection()
   // lock managers
   Container.set(Constants.LOCKS_MANAGERS, [
-    Container.get(ElemagLockManager),
-    Container.get(ElmechLockManager)
+    Container.get(DirectLockManager)
   ])
   // koa controllers list
   Container.set(Constants.CONTROLLERS, [

@@ -7,13 +7,13 @@ import { RelayEntity } from '@/database/entities/RelayEntity';
 import { ConfigureException } from '@/exceptions/ConfigureException';
 
 @Service()
-export class ElemagLockManager extends LockManager {
+export class DirectLockManager extends LockManager {
   /**
    * @public
    * @readonly
    * @type {LockType}
    */
-  type = LockType.ELECTROMAGNETIC
+  type = LockType.DIRECT
 
   /**
    * @override
@@ -67,7 +67,7 @@ export class ElemagLockManager extends LockManager {
   getRelay (lock) {
     const relay = lock.relays.find(it => it.direction == RelayDirection.IN)
     if (!relay)
-      throw new ConfigureException(`Lock '${lock.source}' is not configured`)
+      throw new ConfigureException(`Lock '${lock.destination}' is not configured`)
 
     return relay.relay
   }

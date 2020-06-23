@@ -1,7 +1,6 @@
 export enum LockType {
-  ELECTROMAGNETIC = 'electromagnetic',
-  ELECTROMECHANICAL = 'electromechanical',
-  ELECTRIC = 'electric'
+  DIRECT = 'direct',
+  COMPOSITE = 'composite'
 }
 
 export enum RelayDirection {
