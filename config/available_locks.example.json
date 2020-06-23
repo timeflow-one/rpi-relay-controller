@@ -1,7 +1,7 @@
 [
   {
     "source": "source-name",
-    "type": "electromagnetic",
+    "type": "direct",
     "enabled": true,
     "timeout": 3000,
     "relays": [

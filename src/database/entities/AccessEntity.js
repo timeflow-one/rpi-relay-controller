@@ -18,9 +18,9 @@ export class AccessEntity extends BaseEntity {
    * @type {string}
    */
   @Column({
-    name: 'source',
+    name: 'destination',
     type: 'text',
     nullable: false
   })
-  source
+  destination
 }

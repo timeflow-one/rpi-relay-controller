@@ -10,12 +10,12 @@ export class LockEntity extends BaseEntity {
    * @type {string}
    */
   @Column({
-    name: 'source',
+    name: 'destination',
     type: 'text',
     unique: true,
     nullable: false
   })
-  source
+  destination
 
   /**
    * @type {LockType}

@@ -37,7 +37,7 @@ export class LockController extends KoaController {
     const lock = await getConnection()
       .getRepository(LockEntity)
       .findOneOrFail({
-        source: ctx.request.body.source,
+        destination: ctx.request.body.source,
         enabled: true
       })
 
@@ -54,7 +54,7 @@ export class LockController extends KoaController {
       .getRepository(AccessEntity)
 
     const accessLogRecord = await accessRepository.save(accessRepository.create({
-      source: ctx.request.body.source,
+      destination: ctx.request.body.source,
       initiator: ctx.request.body.initiator
     }))
 

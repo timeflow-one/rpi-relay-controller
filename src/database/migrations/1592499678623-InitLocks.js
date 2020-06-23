@@ -26,7 +26,7 @@ export class InitLocks1592499678623 {
       }
 
       await lockRepository.save(lockRepository.create({
-        source: lock.source,
+        destination: lock.destination,
         type: lock.type,
         enabled: lock.enabled,
         timeout: lock.timeout,
