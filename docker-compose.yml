@@ -1,4 +1,4 @@
-version: 3.5
+version: '3.5'
 services:
   rpi-relay-controller:
     container_name: rpi-relay-controller
@@ -20,7 +20,7 @@ services:
       TYPEORM_ENTITIES_DIR: src/database/entities
       TYPEORM_MIGRATIONS_DIR: src/database/migrations
       TYPEORM_SUBSCRIBERS_DIR: src/database/subscribers
-      TYPEORM_LOGGING: false
+      TYPEORM_LOGGING: 'false'
     expose:
       - 8080
     networks:
