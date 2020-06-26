@@ -46,7 +46,7 @@ cd ~/rpi-relay-controller
    * Конфигурация для 8и релейного модуля:
 
 ```{sh}
-echo '[5,6,13,16,19]' > config/available_relays.json
+echo '[5,6,13,16,19,20,21,26]' > config/available_relays.json
 ```
 
    * Конфигурация для 3х релейного модуля:
