@@ -5,6 +5,7 @@ module.exports = {
       script: 'src/App.js',
       interpreter: 'node',
       interpreter_args: [
+        '-r', 'dotenv/config',
         '-r', 'ts-node/register',
         '-r', 'tsconfig-paths/register'
       ],
