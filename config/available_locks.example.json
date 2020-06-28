@@ -1,6 +1,6 @@
 [
   {
-    "source": "source-name",
+    "destination": "destination-name",
     "type": "direct",
     "enabled": true,
     "timeout": 3000,
