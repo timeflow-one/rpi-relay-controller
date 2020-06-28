@@ -44,9 +44,9 @@ export class DirectLockManager extends LockManager {
    * @returns {Promise<any>}
    */
   async init (lock) {
-    Exec.execSync(`echo ${this.getRelay(lock)} > /sys/class/gpio/export`)
-    Exec.execSync(`echo out > /sys/class/gpio/gpio${this.getRelay(lock)}/direction`)
-    Exec.execSync(`echo 1 > /sys/class/gpio/gpio${this.getRelay(lock)}/value`)
+    Exec.execSync(`echo ${this.getRelay(lock).gpio} > /sys/class/gpio/export`)
+    Exec.execSync(`echo out > /sys/class/gpio/gpio${this.getRelay(lock).gpio}/direction`)
+    Exec.execSync(`echo 1 > /sys/class/gpio/gpio${this.getRelay(lock).gpio}/value`)
   }
 
   /**
@@ -56,7 +56,7 @@ export class DirectLockManager extends LockManager {
    * @returns {Promise<any>}
    */
   async flush (lock) {
-    Exec.execSync(`echo ${this.getRelay(lock)} > /sys/class/gpio/unexport`)
+    Exec.execSync(`echo ${this.getRelay(lock).gpio} > /sys/class/gpio/unexport`)
   }
 
   /**
