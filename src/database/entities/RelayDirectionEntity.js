@@ -23,7 +23,8 @@ export class RelayDirectionEntity extends BaseEntity {
    * @type {RelayEntity}
    */
   @OneToOne(type => RelayEntity, relay => relay.direction, {
-    cascade: true
+    cascade: true,
+    eager: true
   })
   @JoinColumn({
     name: 'id'
