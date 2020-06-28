@@ -1,8 +1,8 @@
 import { KoaController, Controller, Post, Validate, Validator } from 'koa-joi-controllers';
 import { Service, Inject } from 'typedi';
 import { getConnection } from 'typeorm';
-import { LockEntity } from '@/database/entities/LockEntity';
-import { AccessEntity } from '@/database/entities/AccessEntity';
+import { LockEntity } from '@/db/entities/LockEntity';
+import { AccessEntity } from '@/db/entities/AccessEntity';
 import { Constants } from '@/utils/Constants';
 import { ConfigureException } from '@/exceptions/ConfigureException';
 

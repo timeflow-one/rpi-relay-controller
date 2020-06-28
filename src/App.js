@@ -5,7 +5,7 @@ import { Constants } from './utils/Constants'
 import { LockController } from './controllers/LockController'
 import { createConnection, getConnection } from 'typeorm'
 import { DirectLockManager } from './managers/DirectLockManager'
-import { LockEntity } from './database/entities/LockEntity'
+import { LockEntity } from './db/entities/LockEntity'
 import { LockManager } from './managers/LockManager'
 import { ConfigureException } from './exceptions/ConfigureException'
 

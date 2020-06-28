@@ -1,7 +1,7 @@
 import Exec from 'child_process'
 import { LockType } from '@/models/LockType'
-import { LockEntity } from '@/database/entities/LockEntity'
-import { RelayEntity } from '@/database/entities/RelayEntity'
+import { LockEntity } from '@/db/entities/LockEntity'
+import { RelayEntity } from '@/db/entities/RelayEntity'
 
 /**
  * @abstract

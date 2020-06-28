@@ -2,8 +2,8 @@ import { Service } from 'typedi';
 import { LockType, RelayDirection } from '@/models/LockType';
 import { LockManager } from './LockManager';
 import Exec from 'child_process'
-import { LockEntity } from '@/database/entities/LockEntity';
-import { RelayEntity } from '@/database/entities/RelayEntity';
+import { LockEntity } from '@/db/entities/LockEntity';
+import { RelayEntity } from '@/db/entities/RelayEntity';
 import { ConfigureException } from '@/exceptions/ConfigureException';
 
 @Service()
