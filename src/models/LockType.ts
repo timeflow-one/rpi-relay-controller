@@ -4,6 +4,6 @@ export enum LockType {
 }
 
 export enum RelayDirection {
-  IN,
-  OUT
+  IN = 'in',
+  OUT = 'out'
 }

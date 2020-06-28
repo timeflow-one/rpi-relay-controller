@@ -6,7 +6,7 @@
     "timeout": 3000,
     "relays": [
       {
-        "direction": 0,
+        "direction": "in",
         "relay": {
           "gpio": 23
         }
