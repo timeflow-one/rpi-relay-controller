@@ -3,6 +3,7 @@ services:
   rpi-relay-controller:
     container_name: rpi-relay-controller
     restart: unless-stopped
+    privileged: true
     build:
       context: .
       dockerfile: Dockerfile
@@ -23,8 +24,6 @@ services:
       # TYPEORM_LOGGING: false
     expose:
       - 8080
-    volumes:
-      - './database:/etc/database'
     networks:
       - network-bridge
     command: npm run runtime
