@@ -24,6 +24,8 @@ services:
       # TYPEORM_LOGGING: false
     expose:
       - 8080
+    volumes:
+      - './database:/etc/database'
     networks:
       - network-bridge
     command: npm run runtime
