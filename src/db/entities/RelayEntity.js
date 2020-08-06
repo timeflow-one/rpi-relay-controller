@@ -1,4 +1,4 @@
-import { Entity, Column, OneToOne, ManyToOne } from 'typeorm';
+import { Entity, Column, OneToOne } from 'typeorm';
 import { BaseEntity } from './BaseEntity';
 import { RelayDirectionEntity } from './RelayDirectionEntity';
 
@@ -18,6 +18,6 @@ export class RelayEntity extends BaseEntity {
   /**
    * @type {RelayDirectionEntity}
    */
-  @OneToOne(type => RelayDirectionEntity, direction => direction.relay)
+  @OneToOne(() => RelayDirectionEntity, direction => direction.relay)
   direction
 }
