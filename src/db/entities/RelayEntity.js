@@ -1,10 +1,10 @@
-import { Entity, Column, OneToOne, ManyToOne, JoinColumn, Unique, ManyToMany } from 'typeorm';
+import { Entity, Column, Unique, ManyToMany } from 'typeorm';
 import { BaseEntity } from './BaseEntity';
 import { RelayDirection } from '@/models/LockType';
 import { LockEntity } from './LockEntity';
 
 @Entity('relays')
-// @Unique(['id', 'lock'])
+@Unique(['gpio', 'direction'])
 export class RelayEntity extends BaseEntity {
   /**
    * @type {RelayDirection}
@@ -23,16 +23,15 @@ export class RelayEntity extends BaseEntity {
   @Column({
     name: 'gpio',
     type: 'int',
-    unique: true,
     nullable: false
   })
   gpio
 
   /**
-   * @type {LockEntity}
+   * @type {Array<LockEntity>}
    */
   @ManyToMany(() => LockEntity, lock => lock.relays, {
-    onDelete: 'CASCADE'
+    onDelete: 'RESTRICT'
   })
   lock
 }

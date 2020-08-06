@@ -55,7 +55,8 @@ export class LockEntity extends BaseEntity {
    */
   @ManyToMany(() => RelayEntity, relay => relay.lock, {
     eager: true,
-    cascade: true
+    cascade: true,
+    onDelete: 'RESTRICT'
   })
   @JoinTable()
   relays
