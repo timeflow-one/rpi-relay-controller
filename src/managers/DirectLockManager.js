@@ -69,6 +69,6 @@ export class DirectLockManager extends LockManager {
     if (!relay)
       throw new ConfigureException(`Lock '${lock.destination}' is not configured`)
 
-    return relay.relay
+    return relay
   }
 }

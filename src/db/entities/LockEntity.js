@@ -1,9 +1,9 @@
 import { Entity, Column, OneToMany } from 'typeorm'
 import { LockType } from '@/models/LockType'
 import { BaseEntity } from './BaseEntity'
-import { RelayDirectionEntity } from './RelayDirectionEntity'
+import { RelayEntity } from './RelayEntity'
 
-@Entity()
+@Entity('locks')
 export class LockEntity extends BaseEntity {
   /**
    * Access point identifier, object name in the Timeflow
@@ -51,9 +51,9 @@ export class LockEntity extends BaseEntity {
   timeout
 
   /**
-   * @type {Array<RelayDirectionEntity>}
+   * @type {Array<RelayEntity>}
    */
-  @OneToMany(() => RelayDirectionEntity, relay => relay.lock, {
+  @OneToMany(() => RelayEntity, relay => relay.lock, {
     eager: true,
     cascade: true
   })

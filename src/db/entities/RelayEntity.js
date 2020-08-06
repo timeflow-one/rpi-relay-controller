@@ -1,23 +1,40 @@
-import { Entity, Column, OneToOne } from 'typeorm';
+import { Entity, Column, OneToOne, ManyToOne, JoinColumn, Unique } from 'typeorm';
 import { BaseEntity } from './BaseEntity';
-import { RelayDirectionEntity } from './RelayDirectionEntity';
+import { RelayDirection } from '@/models/LockType';
+import { LockEntity } from './LockEntity';
 
-@Entity()
+@Entity('relays')
+@Unique(['id', 'lock'])
 export class RelayEntity extends BaseEntity {
+  /**
+   * @type {RelayDirection}
+   */
+  @Column({
+    name: 'direction',
+    type: 'simple-enum',
+    enum: RelayDirection,
+    nullable: false,
+    default: RelayDirection.IN
+  })
+  direction
+
   /**
    * @type {number}
    */
   @Column({
     name: 'gpio',
     type: 'int',
-    unique: true,
+    // unique: true,
     nullable: false
   })
   gpio
 
   /**
-   * @type {RelayDirectionEntity}
+   * @type {LockEntity}
    */
-  @OneToOne(() => RelayDirectionEntity, direction => direction.relay)
-  direction
+  @ManyToOne(() => LockEntity, lock => lock.relays)
+  @JoinColumn({
+    name: 'lock_id'
+  })
+  lock
 }
