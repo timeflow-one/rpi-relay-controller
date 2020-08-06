@@ -18,8 +18,13 @@ export class InitLocks1592499678623 {
       const relays = []
 
       for (let relay of lock.relays) {
-        const foundRelay = await relayRepository.findOneOrFail({
+        let foundRelay = await relayRepository.findOneOrFail({
           gpio: relay.gpio
+        })
+
+        foundRelay = await relayRepository.save({
+          ...foundRelay,
+          direction: relay.direction
         })
 
         relays.push(foundRelay)
@@ -30,10 +35,7 @@ export class InitLocks1592499678623 {
         type: lock.type,
         enabled: lock.enabled,
         timeout: lock.timeout,
-        relays: relays.map((it, i) => ({
-          direction: lock.relays[i].direction,
-          gpio: it.gpio
-        }))
+        relays
       }))
     }
   }

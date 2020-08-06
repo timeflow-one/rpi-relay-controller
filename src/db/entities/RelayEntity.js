@@ -1,10 +1,10 @@
-import { Entity, Column, OneToOne, ManyToOne, JoinColumn, Unique } from 'typeorm';
+import { Entity, Column, OneToOne, ManyToOne, JoinColumn, Unique, ManyToMany } from 'typeorm';
 import { BaseEntity } from './BaseEntity';
 import { RelayDirection } from '@/models/LockType';
 import { LockEntity } from './LockEntity';
 
 @Entity('relays')
-@Unique(['id', 'lock'])
+// @Unique(['id', 'lock'])
 export class RelayEntity extends BaseEntity {
   /**
    * @type {RelayDirection}
@@ -13,7 +13,6 @@ export class RelayEntity extends BaseEntity {
     name: 'direction',
     type: 'simple-enum',
     enum: RelayDirection,
-    nullable: false,
     default: RelayDirection.IN
   })
   direction
@@ -24,7 +23,7 @@ export class RelayEntity extends BaseEntity {
   @Column({
     name: 'gpio',
     type: 'int',
-    // unique: true,
+    unique: true,
     nullable: false
   })
   gpio
@@ -32,9 +31,8 @@ export class RelayEntity extends BaseEntity {
   /**
    * @type {LockEntity}
    */
-  @ManyToOne(() => LockEntity, lock => lock.relays)
-  @JoinColumn({
-    name: 'lock_id'
+  @ManyToMany(() => LockEntity, lock => lock.relays, {
+    onDelete: 'CASCADE'
   })
   lock
 }

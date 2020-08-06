@@ -1,4 +1,4 @@
-import { Entity, Column, OneToMany } from 'typeorm'
+import { Entity, Column, OneToMany, ManyToMany, JoinTable } from 'typeorm'
 import { LockType } from '@/models/LockType'
 import { BaseEntity } from './BaseEntity'
 import { RelayEntity } from './RelayEntity'
@@ -53,9 +53,10 @@ export class LockEntity extends BaseEntity {
   /**
    * @type {Array<RelayEntity>}
    */
-  @OneToMany(() => RelayEntity, relay => relay.lock, {
+  @ManyToMany(() => RelayEntity, relay => relay.lock, {
     eager: true,
     cascade: true
   })
+  @JoinTable()
   relays
 }

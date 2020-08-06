@@ -8,6 +8,7 @@ import { DirectLockManager } from './managers/DirectLockManager'
 import { LockEntity } from './db/entities/LockEntity'
 import { LockManager } from './managers/LockManager'
 import { ConfigureException } from './exceptions/ConfigureException'
+import { ApiController } from './controllers/ApiController'
 
 @Service()
 class App {
@@ -67,10 +68,11 @@ async function main () {
   ])
   // koa controllers list
   Container.set(Constants.CONTROLLERS, [
-    Container.get(LockController)
+    Container.get(LockController),
+    Container.get(ApiController)
   ])
   // init locks
-  await initLocks()
+  // await initLocks()
 
   const app = Container.get(App)
   process.on('SIGINT', () => app.stop())
