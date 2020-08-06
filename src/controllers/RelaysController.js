@@ -45,15 +45,17 @@ export class RelaysController extends KoaController {
   async add (ctx, next) {
     const relaysRepository = getConnection().getRepository(RelayEntity)
 
-    const relay = await relaysRepository.save(relaysRepository.create({
+    let addedRelay = await relaysRepository.save(relaysRepository.create({
       gpio: ctx.request.body.gpio
     }))
+
+    addedRelay = await relaysRepository.findOneOrFail(addedRelay.id)
 
     ctx.status = 200
     ctx.body = {
       data: {
-        id: relay.id,
-        gpio:relay.gpio
+        id: addedRelay.id,
+        gpio:addedRelay.gpio
       }
     }
 

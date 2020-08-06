@@ -80,7 +80,7 @@ export class LocksController extends KoaController {
   async add (ctx, next) {
     const lockRepository = getConnection().getRepository(LockEntity)
 
-    const addedLock = await lockRepository.save(lockRepository.create({
+    let addedLock = await lockRepository.save(lockRepository.create({
       destination: `${ctx.request.body.site}-${ctx.request.body.door}`,
       type: ctx.request.body.type,
       enabled: ctx.request.body.is_enabled,
@@ -88,6 +88,8 @@ export class LocksController extends KoaController {
       relayIn: ctx.request.body.relay_in,
       relayOut: ctx.request.body.relay_out
     }))
+
+    addedLock = await lockRepository.findOneOrFail(addedLock.id)
 
     ctx.status = 200
     ctx.body = {
