@@ -6,14 +6,14 @@ import { LockType, RelayDirection } from '@/models/LockType';
 import { RelayEntity } from '@/db/entities/RelayEntity';
 
 @Service()
-@Controller('/api')
-export class ApiController extends KoaController {
+@Controller('/api/locks')
+export class LocksController extends KoaController {
   /**
    * @private
    * @param {import('koa').Context} ctx
    * @param {import('koa').Next} next
    */
-  @Get('/locks')
+  @Get('/')
   async all (ctx, next) {
     const locks = await getConnection()
       .getRepository(LockEntity)
@@ -45,7 +45,7 @@ export class ApiController extends KoaController {
    * @param {import('koa').Context} ctx
    * @param {import('koa').Next} next
    */
-  @Post('/locks')
+  @Post('/')
   @Validate({
     type: 'json',
     body: {
@@ -133,7 +133,7 @@ export class ApiController extends KoaController {
    * @param {import('koa').Context} ctx
    * @param {import('koa').Next} next
    */
-  @Delete('/locks/:id')
+  @Delete('/:id')
   async remove (ctx, next) {
     const lockRepository = getConnection().getRepository(LockEntity)
     const lock = await lockRepository.findOneOrFail(ctx.request.params.id)
