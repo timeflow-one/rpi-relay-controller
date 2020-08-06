@@ -9,6 +9,7 @@ import { LockEntity } from './db/entities/LockEntity'
 import { LockManager } from './managers/LockManager'
 import { ConfigureException } from './exceptions/ConfigureException'
 import { LocksController } from './controllers/LocksController'
+import { RelaysController } from './controllers/RelaysController'
 
 @Service()
 class App {
@@ -69,7 +70,8 @@ async function main () {
   // koa controllers list
   Container.set(Constants.CONTROLLERS, [
     Container.get(LockController),
-    Container.get(LocksController)
+    Container.get(LocksController),
+    Container.get(RelaysController)
   ])
   // init locks
   // await initLocks()
