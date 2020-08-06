@@ -2,8 +2,7 @@ import { KoaController, Controller, Get, Post, Validate, Validator, Delete } fro
 import { Service } from 'typedi';
 import { getConnection } from 'typeorm';
 import { LockEntity } from '@/db/entities/LockEntity';
-import { LockType, RelayDirection } from '@/models/LockType';
-import { RelayEntity } from '@/db/entities/RelayEntity';
+import { LockType } from '@/models/LockType';
 
 @Service()
 @Controller('/api/locks')
@@ -27,11 +26,8 @@ export class LocksController extends KoaController {
         type: it.type,
         timeout: it.timeout,
         is_enabled: it.enabled,
-        relays: it.relays.map(it => ({
-          id: it.id,
-          direction: it.direction,
-          gpio: it.gpio
-        })),
+        relay_in: it.relayIn,
+        relay_out: it.relayOut,
         created_at: it.createdAt,
         updated_at: it.updatedAt
       }))
@@ -70,41 +66,27 @@ export class LocksController extends KoaController {
         .boolean()
         .default(true),
 
-      relays: Validator.Joi
-        .array()
-        .items(
-          Validator.Joi.object({
-            direction: Validator.Joi
-              .only(RelayDirection.IN, RelayDirection.OUT)
-              .default(RelayDirection.IN),
+      relay_in: Validator.Joi
+        .number()
+        .positive()
+        .default(null),
 
-            gpio: Validator.Joi
-              .number()
-              .required()
-          })
-        )
+      relay_out: Validator.Joi
+        .number()
+        .positive()
+        .default(null)
     }
   })
   async add (ctx, next) {
-    const relaysRepository = getConnection().getRepository(RelayEntity)
     const lockRepository = getConnection().getRepository(LockEntity)
-    /** @type {Array<RelayEntity>} */
-    const relays = []
-
-    for (let rawRelay of ctx.request.body.relays) {
-      const relay = await relaysRepository.findOneOrFail({
-        gpio: rawRelay.gpio
-      })
-
-      relays.push(relay)
-    }
 
     const addedLock = await lockRepository.save(lockRepository.create({
       destination: `${ctx.request.body.site}-${ctx.request.body.door}`,
       type: ctx.request.body.type,
       enabled: ctx.request.body.is_enabled,
       timeout: ctx.request.body.timeout,
-      relays
+      relayIn: ctx.request.body.relay_in,
+      relayOut: ctx.request.body.relay_out
     }))
 
     ctx.status = 200
@@ -115,11 +97,8 @@ export class LocksController extends KoaController {
         type: addedLock.type,
         timeout: addedLock.timeout,
         is_enabled: addedLock.enabled,
-        relays: addedLock.relays.map(it => ({
-          id: it.id,
-          direction: it.direction,
-          gpio: it.gpio
-        })),
+        relay_in: addedLock.relayIn,
+        relay_out: addedLock.relayOut,
         created_at: addedLock.createdAt,
         updated_at: addedLock.updatedAt
       }

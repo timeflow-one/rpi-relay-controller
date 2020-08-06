@@ -1,16 +1,10 @@
 [
   {
-    "destination": "destination-name",
+    "destination": "test",
     "type": "direct",
     "enabled": true,
     "timeout": 3000,
-    "relays": [
-      {
-        "direction": "in",
-        "relay": {
-          "gpio": 23
-        }
-      }
-    ]
+    "relay_in": 2,
+    "relay_out": null
   }
 ]

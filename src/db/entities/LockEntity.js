@@ -1,4 +1,4 @@
-import { Entity, Column, OneToMany, ManyToMany, JoinTable } from 'typeorm'
+import { Entity, Column, ManyToMany, JoinTable, OneToMany, ManyToOne, JoinColumn } from 'typeorm'
 import { LockType } from '@/models/LockType'
 import { BaseEntity } from './BaseEntity'
 import { RelayEntity } from './RelayEntity'
@@ -51,13 +51,24 @@ export class LockEntity extends BaseEntity {
   timeout
 
   /**
-   * @type {Array<RelayEntity>}
+   * @type {RelayEntity | null}
    */
-  @ManyToMany(() => RelayEntity, relay => relay.lock, {
+  @ManyToOne(() => RelayEntity, relay => relay.in, {
+    nullable: true,
     eager: true,
     cascade: true,
     onDelete: 'RESTRICT'
   })
-  @JoinTable()
-  relays
+  relayIn
+
+  /**
+   * @type {RelayEntity | null}
+   */
+  @ManyToOne(() => RelayEntity, relay => relay.out, {
+    nullable: true,
+    eager: true,
+    cascade: true,
+    onDelete: 'RESTRICT'
+  })
+  relayOut
 }

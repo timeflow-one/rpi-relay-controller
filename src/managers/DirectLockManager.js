@@ -1,5 +1,5 @@
 import { Service } from 'typedi';
-import { LockType, RelayDirection } from '@/models/LockType';
+import { LockType } from '@/models/LockType';
 import { LockManager } from './LockManager';
 import Exec from 'child_process'
 import { LockEntity } from '@/db/entities/LockEntity';
@@ -65,7 +65,8 @@ export class DirectLockManager extends LockManager {
    * @returns {RelayEntity}
    */
   getRelay (lock) {
-    const relay = lock.relays.find(it => it.direction == RelayDirection.IN)
+    const relay = lock.relayIn
+
     if (!relay)
       throw new ConfigureException(`Lock '${lock.destination}' is not configured`)
 
