@@ -63,18 +63,18 @@ export class ControllersServer {
     })
     // error codes middleware
     this.koaApplication.use((ctx, next) => next().catch((err) => {
-      if (!err.status) {
-        switch (err.name) {
-          case 'EntityNotFound':
-          case 'ValidationError':
-          case 'QueryFailedError':
-            err.status = 400;
-            break;
+      // if (!err.status) {
+      switch (err.name) {
+        case 'EntityNotFound':
+        case 'ValidationError':
+        case 'QueryFailedError':
+          err.status = 400;
+          break;
 
-          default:
-            err.status = 500;
-        }
+        default:
+          err.status = 500;
       }
+      // }
 
       ctx.app.emit('error', err, ctx)
     }))
