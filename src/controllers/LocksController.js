@@ -26,14 +26,14 @@ export class LocksController extends KoaController {
         type: it.type,
         timeout: it.timeout,
         is_enabled: it.enabled,
-        relay_in: {
+        relay_in: it.relayIn ? {
           id: it.relayIn?.id,
           gpio: it.relayIn?.gpio
-        },
-        relay_out: {
+        } : null,
+        relay_out: it.relayOut ? {
           id: it.relayOut?.id,
           gpio: it.relayOut?.gpio
-        },
+        } : null,
         created_at: it.createdAt,
         updated_at: it.updatedAt
       }))
@@ -87,7 +87,7 @@ export class LocksController extends KoaController {
     const lockRepository = getConnection().getRepository(LockEntity)
 
     let addedLock = await lockRepository.save(lockRepository.create({
-      destination: `${ctx.request.body.site}-${ctx.request.body.door}`,
+      destination: `${ctx.request.body.site}${process.env.DOOR_SEPARATOR}${ctx.request.body.door}`,
       type: ctx.request.body.type,
       enabled: ctx.request.body.is_enabled,
       timeout: ctx.request.body.timeout,
@@ -105,14 +105,14 @@ export class LocksController extends KoaController {
         type: addedLock.type,
         timeout: addedLock.timeout,
         is_enabled: addedLock.enabled,
-        relay_in: {
+        relay_in: addedLock.relayIn ? {
           id: addedLock.relayIn?.id,
           gpio: addedLock.relayIn?.gpio
-        },
-        relay_out: {
+        } : null,
+        relay_out: addedLock.relayOut ? {
           id: addedLock.relayOut?.id,
           gpio: addedLock.relayOut?.gpio
-        },
+        } : null,
         created_at: addedLock.createdAt,
         updated_at: addedLock.updatedAt
       }
