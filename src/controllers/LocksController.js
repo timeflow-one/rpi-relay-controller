@@ -124,4 +124,22 @@ export class LocksController extends KoaController {
 
     await next()
   }
+
+  /**
+   * @private
+   * @param {import('koa').Context} ctx
+   * @param {import('koa').Next} next
+   */
+  @Get('/types')
+  async types (ctx, next) {
+    ctx.status = 200
+    ctx.body = {
+      data: [
+        LockType.DIRECT,
+        // LockType.COMPOSITE
+      ]
+    }
+
+    await next()
+  }
 }

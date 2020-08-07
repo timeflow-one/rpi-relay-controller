@@ -57,6 +57,10 @@ export class ControllersServer {
    */
   initKoaApplication () {
     this.koaApplication = new Koa()
+    this.koaApplication.use(async (ctx, next) => {
+      ctx.set('Access-Control-Allow-Origin', '*')
+      await next()
+    })
     // error codes middleware
     this.koaApplication.use((ctx, next) => next().catch((err) => {
       if (!err.status) {
