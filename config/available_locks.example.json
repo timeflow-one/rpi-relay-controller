@@ -1,6 +1,6 @@
 [
   {
-    "destination": "test",
+    "destination": "test____door-1",
     "type": "direct",
     "enabled": true,
     "timeout": 3000,
