@@ -26,8 +26,14 @@ export class LocksController extends KoaController {
         type: it.type,
         timeout: it.timeout,
         is_enabled: it.enabled,
-        relay_in: it.relayIn,
-        relay_out: it.relayOut,
+        relay_in: {
+          id: it.relayIn?.id,
+          gpio: it.relayIn?.gpio
+        },
+        relay_out: {
+          id: it.relayOut?.id,
+          gpio: it.relayOut?.gpio
+        },
         created_at: it.createdAt,
         updated_at: it.updatedAt
       }))
@@ -99,8 +105,14 @@ export class LocksController extends KoaController {
         type: addedLock.type,
         timeout: addedLock.timeout,
         is_enabled: addedLock.enabled,
-        relay_in: addedLock.relayIn,
-        relay_out: addedLock.relayOut,
+        relay_in: {
+          id: addedLock.relayIn?.id,
+          gpio: addedLock.relayIn?.gpio
+        },
+        relay_out: {
+          id: addedLock.relayOut?.id,
+          gpio: addedLock.relayOut?.gpio
+        },
         created_at: addedLock.createdAt,
         updated_at: addedLock.updatedAt
       }
