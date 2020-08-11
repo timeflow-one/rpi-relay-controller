@@ -46,7 +46,7 @@ export class LockEntity extends BaseEntity {
     name: 'timeout',
     type: 'int',
     nullable: false,
-    default: process.env.LOCK_TIMEOUT
+    default: process.env.DEFAULT_LOCK_TIMEOUT
   })
   timeout
 
