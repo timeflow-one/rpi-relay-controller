@@ -59,6 +59,9 @@ export class LockEntity extends BaseEntity {
     cascade: true,
     onDelete: 'RESTRICT'
   })
+  @JoinColumn({
+    name: 'relay_in'
+  })
   relayIn
 
   /**
@@ -69,6 +72,9 @@ export class LockEntity extends BaseEntity {
     eager: true,
     cascade: true,
     onDelete: 'RESTRICT'
+  })
+  @JoinColumn({
+    name: 'relay_out'
   })
   relayOut
 }

@@ -4,17 +4,6 @@ import { LockEntity } from './LockEntity';
 
 @Entity('relays')
 export class RelayEntity extends BaseEntity {
-  // /**
-  //  * @type {RelayDirection}
-  //  */
-  // @Column({
-  //   name: 'direction',
-  //   type: 'simple-enum',
-  //   enum: RelayDirection,
-  //   default: RelayDirection.IN
-  // })
-  // direction
-
   /**
    * @type {number}
    */
@@ -29,16 +18,12 @@ export class RelayEntity extends BaseEntity {
   /**
    * @type {Array<LockEntity>}
    */
-  @OneToMany(() => LockEntity, lock => lock.relayIn, {
-    onDelete: 'RESTRICT'
-  })
+  @OneToMany(() => LockEntity, lock => lock.relayIn)
   in
 
   /**
    * @type {Array<LockEntity>}
    */
-  @OneToMany(() => LockEntity, lock => lock.relayOut, {
-    onDelete: 'RESTRICT'
-  })
+  @OneToMany(() => LockEntity, lock => lock.relayOut)
   out
 }

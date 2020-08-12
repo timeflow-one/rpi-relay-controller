@@ -15,7 +15,11 @@ export class RelaysController extends KoaController {
   async all (ctx, next) {
     const relays = await getConnection()
       .getRepository(RelayEntity)
-      .find()
+      .find({
+        order: {
+          gpio: 'ASC'
+        }
+      })
 
     ctx.status = 200
     ctx.body = {
