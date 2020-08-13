@@ -1,12 +1,20 @@
 import { KoaController, Controller, Get, Post, Validate, Validator, Delete } from 'koa-joi-controllers';
-import { Service } from 'typedi';
+import { Service, Inject } from 'typedi';
 import { getConnection } from 'typeorm';
 import { LockEntity } from '@/db/entities/LockEntity';
 import { LockType } from '@/models/LockType';
+import { Constants } from '@/utils/Constants';
+import { LockManager } from '@/managers/LockManager';
+import { Logger } from '@/utils/Logger';
+import { LockController } from './LockController';
 
 @Service()
 @Controller('/api/locks')
 export class LocksController extends KoaController {
+  /** @type {Array<LockManager>} */
+  @Inject(Constants.LOCKS_MANAGERS)
+  lockManagers
+
   /**
    * @private
    * @param {import('koa').Context} ctx
@@ -97,6 +105,15 @@ export class LocksController extends KoaController {
 
     addedLock = await lockRepository.findOneOrFail(addedLock.id)
 
+    try {
+      // init lock after add
+      await this.lockManagers
+        .find(it => it.type == addedLock.type)
+        ?.init(addedLock)
+    } catch (err) {
+      Logger.info(LockController.name, `GPIO's ${addedLock.relayIn?.gpio} or ${addedLock.relayOut?.gpio} already init`)
+    }
+
     ctx.status = 200
     ctx.body = {
       data: {
@@ -131,6 +148,15 @@ export class LocksController extends KoaController {
     const lockRepository = getConnection().getRepository(LockEntity)
     const lock = await lockRepository.findOneOrFail(ctx.request.params.id)
     await lockRepository.remove(lock)
+
+    try {
+      // flush lock after add
+      await this.lockManagers
+        .find(it => it.type == lock.type)
+        ?.flush(lock)
+    } catch (err) {
+      Logger.info(LockController.name, `GPIO's ${lock.relayIn?.gpio} or ${lock.relayOut?.gpio} already flush`)
+    }
 
     ctx.status = 204
 

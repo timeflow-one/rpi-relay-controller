@@ -2,9 +2,9 @@
   "name": "default",
   "type": "sqlite",
   "database": "/usr/database/db.sqlite",
-  "entities": "src/db/entities/*.js",
-  "migrations": "src/db/migrations/*.js",
-  "subscribers": "src/db/subscribers/*.js",
+  "entities": ["src/db/entities/*.js"],
+  "migrations": ["src/db/migrations/*.js"],
+  "subscribers": ["src/db/subscribers/*.js"],
   "cli": {
     "entitiesDir": "src/db/entities",
     "migrationsDir": "src/db/migrations",
