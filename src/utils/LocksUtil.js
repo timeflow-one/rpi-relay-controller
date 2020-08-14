@@ -1,26 +1,20 @@
 import { getConnection } from 'typeorm'
-import { LockManager } from '@/managers/LockManager'
-import { LockEntity } from '@/db/entities/LockEntity'
-import { ConfigureException } from '@/exceptions/ConfigureException'
 import { Logger } from './Logger'
+import { RelayEntity } from '@/db/entities/RelayEntity'
+import { RelayManager } from '@/managers/RelayManager'
 
 /**
- * @param {Array<LockManager>} lockManagers
+ * @param {RelayManager} relayManager
  */
-export async function initLocks (lockManagers) {
+export async function initLocks (relayManager) {
   const connection = getConnection()
 
-  const locks = await connection.getRepository(LockEntity)
+  const relays = await connection.getRepository(RelayEntity)
     .find()
 
-  for (let lock of locks) {
+  for (let relay of relays) {
     try {
-      const lockManager = lockManagers.find(it => it.type == lock.type)
-
-      if (!lockManager)
-        throw new ConfigureException(`Missing manager for '${lock.type}' lock`)
-
-      await lockManager.init(lock)
+      await relayManager.init(relay)
     } catch (err) {
       Logger.error('Init locks', err)
     }
