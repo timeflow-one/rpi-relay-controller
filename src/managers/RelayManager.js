@@ -1,7 +1,9 @@
 import { RelayEntity } from '@/db/entities/RelayEntity'
 import Exec from 'child_process'
 import { RelayException } from '@/exceptions/RelayException'
+import { Service } from 'typedi'
 
+@Service()
 export class RelayManager {
   /**
    * @public
