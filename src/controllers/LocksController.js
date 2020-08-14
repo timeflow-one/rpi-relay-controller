@@ -111,7 +111,7 @@ export class LocksController extends KoaController {
         .find(it => it.type == addedLock.type)
         ?.init(addedLock)
     } catch (err) {
-      Logger.info(LockController.name, `GPIO's ${addedLock.relayIn?.gpio} or ${addedLock.relayOut?.gpio} already init`)
+      Logger.info(LockController.name, `GPIO's ${addedLock.relayIn?.gpio} or ${addedLock.relayOut?.gpio} already init or can't be init`)
     }
 
     ctx.status = 200
@@ -155,7 +155,7 @@ export class LocksController extends KoaController {
         .find(it => it.type == lock.type)
         ?.flush(lock)
     } catch (err) {
-      Logger.info(LockController.name, `GPIO's ${lock.relayIn?.gpio} or ${lock.relayOut?.gpio} already flush`)
+      Logger.info(LockController.name, `GPIO's ${lock.relayIn?.gpio} or ${lock.relayOut?.gpio} already flush or can't be flushed`)
     }
 
     ctx.status = 204
