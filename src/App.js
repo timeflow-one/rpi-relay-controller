@@ -8,6 +8,7 @@ import { DirectLockManager } from './managers/DirectLockManager'
 import { LocksController } from './controllers/LocksController'
 import { RelaysController } from './controllers/RelaysController'
 import { initLocks } from './utils/LocksUtil'
+import { RelayManager } from './managers/RelayManager'
 
 @Service()
 class App {
@@ -55,7 +56,7 @@ async function main () {
     Container.get(RelaysController)
   ])
   // init locks
-  await initLocks(Container.get(Constants.LOCKS_MANAGERS))
+  await initLocks(Container.get(RelayManager))
 
   const app = Container.get(App)
   process.on('SIGINT', () => app.stop())
