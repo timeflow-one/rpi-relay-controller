@@ -1,7 +1,7 @@
 import { Entity, Column } from 'typeorm';
 import { BaseEntity } from './BaseEntity';
 
-@Entity()
+@Entity('acceses')
 export class AccessEntity extends BaseEntity {
   /**
    * @type {string}

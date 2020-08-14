@@ -1,9 +1,9 @@
-import { Entity, Column, OneToMany, OneToOne, JoinColumn, Unique } from 'typeorm'
+import { Entity, Column, ManyToMany, JoinTable, OneToMany, ManyToOne, JoinColumn } from 'typeorm'
 import { LockType } from '@/models/LockType'
 import { BaseEntity } from './BaseEntity'
-import { RelayDirectionEntity } from './RelayDirectionEntity'
+import { RelayEntity } from './RelayEntity'
 
-@Entity()
+@Entity('locks')
 export class LockEntity extends BaseEntity {
   /**
    * Access point identifier, object name in the Timeflow
@@ -46,16 +46,35 @@ export class LockEntity extends BaseEntity {
     name: 'timeout',
     type: 'int',
     nullable: false,
-    default: process.env.LOCK_TIMEOUT
+    default: process.env.DEFAULT_LOCK_TIMEOUT
   })
   timeout
 
   /**
-   * @type {Array<RelayDirectionEntity>}
+   * @type {RelayEntity | null}
    */
-  @OneToMany(type => RelayDirectionEntity, relay => relay.lock, {
+  @ManyToOne(() => RelayEntity, relay => relay.in, {
+    nullable: true,
     eager: true,
-    cascade: true
+    cascade: true,
+    onDelete: 'RESTRICT'
   })
-  relays
+  @JoinColumn({
+    name: 'relay_in'
+  })
+  relayIn
+
+  /**
+   * @type {RelayEntity | null}
+   */
+  @ManyToOne(() => RelayEntity, relay => relay.out, {
+    nullable: true,
+    eager: true,
+    cascade: true,
+    onDelete: 'RESTRICT'
+  })
+  @JoinColumn({
+    name: 'relay_out'
+  })
+  relayOut
 }

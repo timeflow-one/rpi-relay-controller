@@ -1,8 +1,8 @@
-import { Entity, Column, OneToOne, ManyToOne } from 'typeorm';
+import { Entity, Column, OneToMany } from 'typeorm';
 import { BaseEntity } from './BaseEntity';
-import { RelayDirectionEntity } from './RelayDirectionEntity';
+import { LockEntity } from './LockEntity';
 
-@Entity()
+@Entity('relays')
 export class RelayEntity extends BaseEntity {
   /**
    * @type {number}
@@ -16,8 +16,14 @@ export class RelayEntity extends BaseEntity {
   gpio
 
   /**
-   * @type {RelayDirectionEntity}
+   * @type {Array<LockEntity>}
    */
-  @OneToOne(type => RelayDirectionEntity, direction => direction.relay)
-  direction
+  @OneToMany(() => LockEntity, lock => lock.relayIn)
+  in
+
+  /**
+   * @type {Array<LockEntity>}
+   */
+  @OneToMany(() => LockEntity, lock => lock.relayOut)
+  out
 }
