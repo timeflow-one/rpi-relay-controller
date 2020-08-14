@@ -149,14 +149,14 @@ export class LocksController extends KoaController {
     const lock = await lockRepository.findOneOrFail(ctx.request.params.id)
     await lockRepository.remove(lock)
 
-    try {
-      // flush lock after add
-      await this.lockManagers
-        .find(it => it.type == lock.type)
-        ?.flush(lock)
-    } catch (err) {
-      Logger.info(LockController.name, `GPIO's ${lock.relayIn?.gpio} or ${lock.relayOut?.gpio} already flush or can't be flushed`)
-    }
+    // try {
+    //   // flush lock after add
+    //   await this.lockManagers
+    //     .find(it => it.type == lock.type)
+    //     ?.flush(lock)
+    // } catch (err) {
+    //   Logger.info(LockController.name, `GPIO's ${lock.relayIn?.gpio} or ${lock.relayOut?.gpio} already flush or can't be flushed`)
+    // }
 
     ctx.status = 204
 
