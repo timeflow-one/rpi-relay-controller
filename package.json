@@ -1,6 +1,6 @@
 {
   "name": "rpi-relay-controller",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "main": "src/App.js",
   "scripts": {
     "start": "node -r dotenv/config -r ts-node/register -r tsconfig-paths/register src/App.js",
