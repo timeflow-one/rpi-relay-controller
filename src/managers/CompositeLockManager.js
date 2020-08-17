@@ -7,6 +7,7 @@ import Exec from 'child_process'
 import { RelayException } from '@/exceptions/RelayException';
 import { Inject } from 'typedi';
 import { Constants } from '@/utils/Constants';
+import { sleep } from '@/utils/Sleep';
 
 export class CompositeLockManager extends LockManager {
   /** @type {number} */
