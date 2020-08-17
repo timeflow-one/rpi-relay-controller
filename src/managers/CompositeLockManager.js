@@ -66,12 +66,12 @@ export class CompositeLockManager extends LockManager {
       // init relay in
       Exec.execSync(`echo ${this.getRelayIn(lock).gpio} > /sys/class/gpio/export`)
       Exec.execSync(`echo out > /sys/class/gpio/gpio${this.getRelayIn(lock).gpio}/direction`)
-      Exec.execSync(`echo 1 > /sys/class/gpio/gpio${this.getRelayIn(lock).gpio}/value`)
+      Exec.execSync(`echo ${process.env.INIT_RELAY_STATE} > /sys/class/gpio/gpio${this.getRelayIn(lock).gpio}/value`)
 
       // init relay out
       Exec.execSync(`echo ${this.getRelayOut(lock).gpio} > /sys/class/gpio/export`)
       Exec.execSync(`echo out > /sys/class/gpio/gpio${this.getRelayOut(lock).gpio}/direction`)
-      Exec.execSync(`echo 1 > /sys/class/gpio/gpio${this.getRelayOut(lock).gpio}/value`)
+      Exec.execSync(`echo ${process.env.INIT_RELAY_STATE} > /sys/class/gpio/gpio${this.getRelayOut(lock).gpio}/value`)
     } catch (err) {
       throw new RelayException(`Error init relay, using gpio's: ${this.getRelayIn(lock).gpio} and ${this.getRelayOut(lock).gpio}`)
     }
