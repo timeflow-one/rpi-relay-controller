@@ -49,6 +49,7 @@ async function main () {
   Container.set(Constants.LOCKS_MANAGERS, [
     Container.get(DirectLockManager)
   ])
+  Container.set(Constants.ELECTROMOTOR_TURN_TIMEOUT, Number(process.env.ELECTROMOTOR_TURN_TIMEOUT || 500))
   // koa controllers list
   Container.set(Constants.CONTROLLERS, [
     Container.get(LockController),
