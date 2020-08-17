@@ -9,6 +9,7 @@ import { LocksController } from './controllers/LocksController'
 import { RelaysController } from './controllers/RelaysController'
 import { initLocks } from './utils/LocksUtil'
 import { RelayManager } from './managers/RelayManager'
+import { CompositeLockManager } from './managers/CompositeLockManager'
 
 @Service()
 class App {
@@ -47,7 +48,8 @@ async function main () {
   await createConnection()
   // lock managers
   Container.set(Constants.LOCKS_MANAGERS, [
-    Container.get(DirectLockManager)
+    Container.get(DirectLockManager),
+    Container.get(CompositeLockManager)
   ])
   Container.set(Constants.ELECTROMOTOR_TURN_TIMEOUT, Number(process.env.ELECTROMOTOR_TURN_TIMEOUT || 500))
   // koa controllers list
