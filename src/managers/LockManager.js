@@ -63,7 +63,7 @@ export class LockManager {
    * @param {RelayEntity} gpio
    */
   setHigh (gpio) {
-    Exec.execSync(`echo 1 > /sys/class/gpio/gpio${gpio.gpio}/value`)
+    Exec.execSync(`echo 0 > /sys/class/gpio/gpio${gpio.gpio}/value`)
   }
 
   /**
@@ -71,7 +71,7 @@ export class LockManager {
    * @param {RelayEntity} gpio
    */
   setLow (gpio) {
-    Exec.execSync(`echo 0 > /sys/class/gpio/gpio${gpio.gpio}/value`)
+    Exec.execSync(`echo 1 > /sys/class/gpio/gpio${gpio.gpio}/value`)
   }
 
   /**
