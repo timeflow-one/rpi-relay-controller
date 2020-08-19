@@ -5,10 +5,11 @@ import { RelayEntity } from '@/db/entities/RelayEntity';
 import { ConfigureException } from '@/exceptions/ConfigureException';
 import Exec from 'child_process'
 import { RelayException } from '@/exceptions/RelayException';
-import { Inject } from 'typedi';
+import { Inject, Service } from 'typedi';
 import { Constants } from '@/utils/Constants';
 import { sleep } from '@/utils/Sleep';
 
+@Service()
 export class CompositeLockManager extends LockManager {
   /** @type {number} */
   @Inject(Constants.ELECTROMOTOR_TURN_TIMEOUT)

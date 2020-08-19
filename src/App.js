@@ -46,12 +46,12 @@ class App {
 async function main () {
   // create connection to database
   await createConnection()
+  Container.set(Constants.ELECTROMOTOR_TURN_TIMEOUT, Number(process.env.ELECTROMOTOR_TURN_TIMEOUT || 500))
   // lock managers
   Container.set(Constants.LOCKS_MANAGERS, [
     Container.get(DirectLockManager),
     Container.get(CompositeLockManager)
   ])
-  Container.set(Constants.ELECTROMOTOR_TURN_TIMEOUT, Number(process.env.ELECTROMOTOR_TURN_TIMEOUT || 500))
   // koa controllers list
   Container.set(Constants.CONTROLLERS, [
     Container.get(LockController),
