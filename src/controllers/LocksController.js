@@ -154,7 +154,7 @@ export class LocksController extends KoaController {
     ctx.body = {
       data: [
         LockType.DIRECT,
-        // LockType.COMPOSITE
+        LockType.COMPOSITE
       ]
     }
 
